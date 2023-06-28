@@ -62,9 +62,8 @@ describe('BankAccount', () => {
     const accToDepos = getBankAccount(money);
     const moneyForDepos = await accToDepos.fetchBalance();
     if (moneyForDepos) {
-      expect(accToDepos.deposit(moneyForDepos)).toBe({
-        _balance: money + moneyForDepos,
-      });
+      accToDepos.deposit(moneyForDepos);
+      expect(accToDepos.getBalance()).toBe(money + moneyForDepos);
     }
   });
 
