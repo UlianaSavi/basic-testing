@@ -1,7 +1,8 @@
-// import { readFileAsynchronously, doStuffByTimeout, doStuffByInterval } from '.';
-import { doStuffByTimeout } from '.';
+import { doStuffByTimeout, doStuffByInterval } from '.';
 
 const callback = jest.fn(() => console.log('Text after timeout'));
+const callbackEmpty = jest.fn();
+const numForTimer = 100;
 
 describe('doStuffByTimeout', () => {
   beforeAll(() => {
@@ -14,13 +15,13 @@ describe('doStuffByTimeout', () => {
 
   test('should set timeout with provided callback and timeout', () => {
     jest.spyOn(global, 'setTimeout');
-    doStuffByTimeout(callback, 100);
-    expect(setTimeout).toBeCalledWith(callback, 100);
+    doStuffByTimeout(callback, numForTimer);
+    expect(setTimeout).toBeCalledWith(callback, numForTimer);
   });
 
   test('should call callback only after timeout', () => {
     expect(callback).not.toBeCalled();
-    doStuffByTimeout(callback, 100);
+    doStuffByTimeout(callback, numForTimer);
     jest.runAllTimers();
     expect(callback).toBeCalled();
   });
@@ -36,11 +37,23 @@ describe('doStuffByInterval', () => {
   });
 
   test('should set interval with provided callback and timeout', () => {
-    // Write your test here
+    jest.spyOn(global, 'setInterval');
+    doStuffByInterval(callback, numForTimer);
+    expect(setInterval).toBeCalledWith(callback, numForTimer);
   });
 
   test('should call callback multiple times after multiple intervals', () => {
-    // Write your test here
+    doStuffByInterval(callbackEmpty, numForTimer);
+
+    expect(callbackEmpty).not.toBeCalled();
+
+    jest.runOnlyPendingTimers();
+
+    expect(callbackEmpty).toBeCalledTimes(1);
+
+    jest.runOnlyPendingTimers();
+
+    expect(callbackEmpty).toBeCalledTimes(2);
   });
 });
 
