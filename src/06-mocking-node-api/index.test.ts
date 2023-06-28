@@ -1,5 +1,7 @@
-// Uncomment the code below and write your tests
 // import { readFileAsynchronously, doStuffByTimeout, doStuffByInterval } from '.';
+import { doStuffByTimeout } from '.';
+
+const callback = jest.fn(() => console.log('Text after timeout'));
 
 describe('doStuffByTimeout', () => {
   beforeAll(() => {
@@ -11,11 +13,16 @@ describe('doStuffByTimeout', () => {
   });
 
   test('should set timeout with provided callback and timeout', () => {
-    // Write your test here
+    jest.spyOn(global, 'setTimeout');
+    doStuffByTimeout(callback, 100);
+    expect(setTimeout).toBeCalledWith(callback, 100);
   });
 
   test('should call callback only after timeout', () => {
-    // Write your test here
+    expect(callback).not.toBeCalled();
+    doStuffByTimeout(callback, 100);
+    jest.runAllTimers();
+    expect(callback).toBeCalled();
   });
 });
 
