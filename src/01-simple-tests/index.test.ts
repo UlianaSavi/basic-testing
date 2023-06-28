@@ -1,7 +1,7 @@
 import { simpleCalculator, Action } from './index';
 
 const inputAdd = { a: 4, b: 2, action: Action.Add };
-const inputSubstract = { a: 4, b: 2, action: Action.Substract };
+const inputSubstract = { a: 4, b: 2, action: Action.Subtract };
 const inputMultiply = { a: 4, b: 2, action: Action.Multiply };
 const inputDivide = { a: 4, b: 2, action: Action.Divide };
 const inputExpon = { a: 4, b: 2, action: Action.Exponentiate };

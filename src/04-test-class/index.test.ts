@@ -12,7 +12,7 @@ describe('BankAccount', () => {
   const moreThanBalance = balanse + balanse;
   // const newBalanse = balanse + money;
   const bankAccount = getBankAccount(balanse);
-  const testAccount = getBankAccount(money);
+  // const testAccount = getBankAccount(money);
 
   test('should create account with initial balance', () => {
     expect(getBankAccount(balanse)).toBeInstanceOf(BankAccount);
@@ -25,7 +25,9 @@ describe('BankAccount', () => {
   });
 
   test('should throw error when transferring more than balance', () => {
-    // Write your test here
+    expect(() => {
+      bankAccount.transfer(money, bankAccount);
+    }).toThrow(new TransferFailedError());
   });
 
   test('should throw error when transferring to the same account', () => {
